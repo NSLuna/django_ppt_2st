@@ -12,7 +12,9 @@ export default function SkillModal({title, details, onClose}) {
                 <h2 className="text-2xl font-semibold text-[#ff4f7b] mb-4">{title}</h2>
 
                 <ul className="space-y-2 text-gray-700 text-sm leading-relaxed">
-                    {details.map((item, idx)=> (<li key={idx}>•</li>))}
+                    {details.map((item, idx) => (
+                     <li key={idx}>• {item}</li>
+                    ))}
                 </ul>
             </div>
         </div>
