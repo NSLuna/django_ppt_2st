@@ -19,6 +19,9 @@ class Project(models.Model) :
     tech_stack = models.CharField(max_length=300, blank=True)
     github = models.CharField(max_length=300, blank=True)
 
+    thumbnail = models.ImageField(upload_to="project_thumbnails/", blank=True, null=True)
+
+
 
     def __str__(self):
         return self.title

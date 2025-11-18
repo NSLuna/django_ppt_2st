@@ -1,10 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SkillModal from "./components/SkillModal";
+import ProjectModal from "./components/ProjectModal";
 
 export default function Home() {
   const [openSkill, setOpenSkill] = useState(null);
+  const [projects, setProjects] = useState([]);      // ← Django 프로젝트 데이터
+  const [openProject, setOpenProject] = useState(null);
+
+  // Django API에서 프로젝트 가져오기
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/projects/")   // 배포 시 URL만 바꿔주면 됨
+      .then((res) => res.json())
+      .then((data) => setProjects(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   // 스킬 상세 설명 (모달 내용)
   const skillDetails = {
@@ -21,7 +32,7 @@ export default function Home() {
     React: [
       "컴포넌트 기반 UI 구조 설계 가능",
       "Axios API 연동",
-      "React Router / 상태관리 훨씬 익숙함",
+      "React Router / 상태관리 익숙함",
     ],
     "Next.js": [
       "SSR / SSG 개념 이해하고 프로젝트 적용 가능",
@@ -31,7 +42,6 @@ export default function Home() {
     TensorFlow: [
       "LSTM / GRU / CNN 딥러닝 모델 실습 완료",
       "모델 저장 및 불러오기, 평가 가능",
-      "IMDB / Fashion MNIST 등 실습 경험",
     ],
     MySQL: [
       "DB 스키마 설계 및 정규화",
@@ -44,8 +54,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen">
-
-      {/* 왼쪽 about */}
+      
+      {/* 왼쪽 소개 */}
       <section className="w-1/3 bg-[#111] text-white p-10 flex flex-col items-center">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold mb-2">루나</h1>
@@ -57,15 +67,17 @@ export default function Home() {
           </p>
 
           <div className="text-sm text-gray-400 space-y-1">
-            <p> 대충@이메일.com</p>
+            <p> dummy@email.com</p>
             <p> 010-1234-5678</p>
             <p className="mt-3 underline cursor-pointer">GitHub 바로가기</p>
           </div>
         </div>
       </section>
 
-      {/* 오른쪽 콘텐츠 */}
+      {/* 오른쪽 컨텐츠 */}
       <section className="w-2/3 bg-white text-black p-14">
+
+        {/* Activities */}
         <h2 className="text-xl font-semibold mb-6">Activities</h2>
         <ul className="space-y-3 text-gray-700">
           <li>• Django & React 기반 AI 프로젝트 구현</li>
@@ -89,9 +101,31 @@ export default function Home() {
 
         {/* Projects */}
         <h2 className="text-xl font-semibold mt-10 mb-6">Projects</h2>
-        <p className="text-gray-600">대충 프로젝트 모달 영역 들어갈 곳</p>
 
-        {/* 모달 */}
+        <div className="grid grid-cols-2 gap-6">
+          {projects.map((p) => (
+          <div
+            key={p.id}
+            onClick={() => setOpenProject(p)}
+            className="cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition p-4"
+          >
+            {p.thumbnail && (
+            <img
+              src={`http://127.0.0.1:8000${p.thumbnail}`}
+              alt={p.title}
+              className="w-full h-40 object-cover rounded-lg mb-3"
+              />
+            )}
+
+          <h3 className="text-lg font-bold text-gray-800">{p.title}</h3>
+          <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+          {p.description}
+          </p>
+          </div>
+          ))}
+          </div>
+
+        {/* 스킬 모달 */}
         {openSkill && (
           <SkillModal
             title={openSkill}
@@ -99,8 +133,16 @@ export default function Home() {
             onClose={() => setOpenSkill(null)}
           />
         )}
-      </section>
 
+        {/* 프로젝트 모달 */}
+        {openProject && (
+          <ProjectModal
+            project={openProject}
+            onClose={() => setOpenProject(null)}
+          />
+        )}
+
+      </section>
     </main>
   );
 }
