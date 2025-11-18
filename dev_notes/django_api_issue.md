@@ -57,19 +57,19 @@ DB가 정상적으로 생성되었고 API 호출 성공
 
 Django REST Framework 브라우징 API 페이지에도 정상 렌더링 확인
 
-5. 이번 이슈로 배운점 
+## 5. 이번 이슈로 배운점 
 
-1) Django 프로젝트는 반드시 conda를 deactivate 시키거나 가상환경을 사용해야한다
+### 1) Django 프로젝트는 반드시 conda를 deactivate 시키거나 가상환경을 사용해야한다
 
-2) VSCode 인터프리터 선택만 믿으면 안됨 -> 실제로 콘다 환경이 구동중일 가능성이 있음
+### 2) VSCode 인터프리터 선택만 믿으면 안됨 -> 실제로 콘다 환경이 구동중일 가능성이 있음
 
-3) 환경이 꼬이면 Django 가 INSTALLED_APPS를 제대로 못읽을수 있다...
+### 3) 환경이 꼬이면 Django 가 INSTALLED_APPS를 제대로 못읽을수 있다...
 
-4) 개발 환경 설정 문제 = 증상은 진짜 다양하고 복잡하게 나타난다.. (404, runtime error, operational error.. etc..)
+### 4) 개발 환경 설정 문제 = 증상은 진짜 다양하고 복잡하게 나타난다.. (404, runtime error, operational error.. etc..)
 
-5) 기본 개발 환경이 모든 개발의 기본 핵심이다 ..!
+### 5) 기본 개발 환경이 모든 개발의 기본 핵심이다 ..!
 
-6. 다음에 해야할것
+## 6. 다음에 해야할것
 
 - About, Project OPM 데이터 넣기
 - API 구조확장
