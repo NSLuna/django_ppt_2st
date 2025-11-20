@@ -48,30 +48,49 @@ export default function Home() {
       "ORM 기반 CRUD 구현",
       "JOIN / Index 성능 최적화 이해",
     ],
+
   };
 
   const skillList = Object.keys(skillDetails);
 
   return (
-    <main className="flex min-h-screen">
+    <main className="flex min-h-screen w-full">
       
       {/* 왼쪽 소개 */}
-      <section className="w-1/3 bg-[#111] text-white p-10 flex flex-col items-center">
+      <section className="w-1/5 bg-[#DDE6F5] text-[#1A1A1A] p-10 flex flex-col items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold mb-2">루나</h1>
-          <p className="text-xl text-gray-300 mb-6">AI 풀스택 개발자</p>
+          <p className="text-xl text-gray-333 mb-6">AI 풀스택 개발자</p>
 
-          <p className="text-sm text-gray-400 leading-relaxed mb-8">
+          <p className="text-sm text-gray-555 leading-relaxed mb-8">
             안녕하세요! 포트폴리오 페이지 제작 중입니다 <br />
             노가다가 끝이질 않스므니다
           </p>
+          <a
+          href="mailto: nsluna@naver.com"
+          className="inline-flex items-center gap-2 hover:text-[#2a4d8f] transition text-[#555]"
+          >
+          <img src= "mail.svg" className="w-5 h-5"
+          style={{filter :"graysacle(30%) brightness(90%)"}}/>
+           nsluna@naver.com
+          </a>
+            <p className="mt-3 underline cursor-pointer ">
+            <a href="https://github.com/NSLuna" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 mt-5 text-[#555] hover:text-[#2a4d8f]"
+            >
+            <img src="/github.svg" className="w-6 h-6 graysacle(30%) brightness(90%)"
+             style={{filter :"graysacle(30%) brightness(90%)"}}
+             /> 
+             
+            <span>GitHub 바로가기</span>
+            </a>
+          </p>
 
-          <div className="text-sm text-gray-400 space-y-1">
-            <p> dummy@email.com</p>
-            <p> 010-1234-5678</p>
-            <p className="mt-3 underline cursor-pointer">GitHub 바로가기</p>
+
           </div>
-        </div>
+      
       </section>
 
       {/* 오른쪽 컨텐츠 */}
@@ -107,7 +126,12 @@ export default function Home() {
           <div
             key={p.id}
             onClick={() => setOpenProject(p)}
-            className="cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition p-4"
+            className="
+            cursor-pointer bg-white rounded-xl shadow-md 
+            hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] 
+            transition-all duration-600 p-4
+            "
+
           >
             {p.thumbnail && (
             <img
