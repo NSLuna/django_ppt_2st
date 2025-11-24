@@ -6,10 +6,9 @@ import ProjectModal from "./components/ProjectModal";
 
 export default function Home() {
   const [openSkill, setOpenSkill] = useState(null);
-  const [projects, setProjects] = useState([]); // Django 프로젝트 데이터
+  const [projects, setProjects] = useState([]);
   const [openProject, setOpenProject] = useState(null);
 
-  // Django API에서 프로젝트 가져오기
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/projects/")
       .then((res) => res.json())
@@ -17,7 +16,6 @@ export default function Home() {
       .catch((err) => console.error(err));
   }, []);
 
-  // 스킬 상세 설명
   const skillDetails = {
     Python: [
       "Pandas / NumPy 기반 데이터 처리 가능",
@@ -50,100 +48,105 @@ export default function Home() {
   const skillList = Object.keys(skillDetails);
 
   return (
-    <main className="flex min-h-screen w-full">
+    <main className="flex min-h-screen w-full bg-[#F4ECE7] font-pretendard">
 
       {/* 왼쪽 사이드 */}
-      <section className="w-1/5 bg-[#DDE6F5] text-[#1A1A1A] p-10 flex flex-col items-center justify-center">
-        <div className="text-center">
+      <aside className="w-1/4 bg-[#EADDE8] p-12 flex flex-col justify-center border-r border-[#E3D7DE]">
+        <h1 className="text-4xl font-extrabold text-[#6E618E] mb-4">루나</h1>
+        <p className="text-lg text-[#6E618E] mb-10">AI 풀스택 개발자</p>
 
-          <h1 className="text-4xl font-extrabold mb-2">루나</h1>
-          <p className="text-xl text-gray-700 mb-6">AI 풀스택 개발자</p>
-
-          <p className="text-sm text-gray-600 leading-relaxed mb-8">
-            안녕하세요! 포트폴리오 페이지 제작 중입니다 <br />
-            노가다가 끝이질 않스므니다 😭
+        <div className="space-y-4 text-[#6E618E] text-sm leading-relaxed">
+          <p>
+            안녕하세요!  
+            <br /> 포트폴리오를 제작 중입니다.  
+            <br /> 아직도 노가다가 끝나지 않아요 😭
           </p>
 
-          {/* 이메일 */}
-          <a
-            href="mailto:nsluna@naver.com"
-            className="inline-flex items-center gap-2 hover:text-[#2a4d8f] transition text-[#555]"
-          >
-            <img src="/mail.svg" className="w-5 h-5" />
-            nsluna@naver.com
-          </a>
+          <div className="pt-4">
+            <p className="font-bold mb-1">Email</p>
+            <a
+              href="mailto:nsluna@naver.com"
+              className="text-[#4A3F35] hover:text-[#6E618E] transition"
+            >
+              nsluna@naver.com
+            </a>
+          </div>
 
-          {/* 깃허브 */}
-          <a
-            href="https://github.com/NSLuna"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 mt-5 text-[#555] hover:text-[#2a4d8f]"
-          >
-            <img
-              src="/github.svg"
-              className="w-6 h-6"
-              style={{ filter: "grayscale(30%) brightness(90%)" }}
-            />
-            <span>GitHub 바로가기</span>
-          </a>
-
+          <div className="pt-2">
+            <p className="font-bold mb-1">GitHub</p>
+            <a
+              href="https://github.com/NSLuna"
+              className="text-[#4A3F35] hover:text-[#6E618E] transition"
+            >
+              github.com/NSLuna
+            </a>
+          </div>
         </div>
-      </section>
+      </aside>
 
       {/* 오른쪽 메인 */}
-      <section className="w-4/5 bg-white text-black p-14">
+      <section className="w-3/4 p-16 space-y-16 overflow-y-auto">
 
         {/* Activities */}
-        <h2 className="text-xl font-semibold mb-6">Activities</h2>
-        <ul className="space-y-3 text-gray-700">
-          <li>• Django & React 기반 AI 프로젝트 구현</li>
-          <li>• 빅데이터 분석 모델링</li>
-          <li>• 백엔드 API 설계 및 배포</li>
-        </ul>
+        <div>
+          <div className="border-l-4 border-[#D0C2D9] pl-3 mb-4">
+            <h2 className="text-2xl font-semibold text-[#6E618E]">Activities</h2>
+          </div>
+          <ul className="space-y-2 text-[#4A3F35]">
+            <li>• Django & React 기반 AI 프로젝트 구현</li>
+            <li>• 빅데이터 분석 모델링</li>
+            <li>• 백엔드 API 설계 및 배포</li>
+          </ul>
+        </div>
 
         {/* Skills */}
-        <h2 className="text-xl font-semibold mt-10 mb-6">Skills</h2>
-        <div className="flex gap-4 flex-wrap text-sm">
-          {skillList.map((skill) => (
-            <button
-              key={skill}
-              onClick={() => setOpenSkill(skill)}
-              className="px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition"
-            >
-              {skill}
-            </button>
-          ))}
+        <div>
+          <div className="border-l-4 border-[#D0C2D9] pl-3 mb-4">
+            <h2 className="text-2xl font-semibold text-[#6E618E]">Skills</h2>
+          </div>
+          <div className="flex gap-3 flex-wrap">
+            {skillList.map((skill) => (
+              <button
+                key={skill}
+                onClick={() => setOpenSkill(skill)}
+                className="px-4 py-2 rounded-full text-[#6E618E] bg-white shadow-sm 
+                hover:bg-[#E9E0D8] transition"
+              >
+                {skill}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Projects */}
-        <h2 className="text-xl font-semibold mt-10 mb-6">Projects</h2>
-        <div className="grid grid-cols-2 gap-6">
-          {projects.map((p) => (
-            <div
-              key={p.id}
-              onClick={() => setOpenProject(p)}
-              className="cursor-pointer bg-white rounded-xl shadow-md 
-                hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] 
-                transition-all duration-300 p-4"
-            >
-              {p.thumbnail && (
-                <img
-                  src={p.thumbnail}
-                  alt={p.title}
-                  className="w-full h-40 object-cover rounded-lg mb-3"
-                />
-              )}
+        <div>
+          <div className="border-l-4 border-[#D0C2D9] pl-3 mb-4">
+            <h2 className="text-2xl font-semibold text-[#6E618E]">Projects</h2>
+          </div>
 
-              <h3 className="text-lg font-bold text-gray-800">{p.title}</h3>
-              <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                {p.description}
-              </p>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-8">
+            {projects.map((p) => (
+              <div
+                key={p.id}
+                onClick={() => setOpenProject(p)}
+                className="cursor-pointer bg-white border border-[#E2D9D2] rounded-xl p-5 
+                hover:shadow-[0_4px_20px_rgba(110,97,142,0.2)] hover:-translate-y-1 transition-all"
+              >
+                {p.thumbnail && (
+                  <img
+                    src={p.thumbnail}
+                    alt={p.title}
+                    className="w-full h-44 object-cover rounded-lg mb-4"
+                  />
+                )}
+                <h3 className="text-lg font-bold text-[#6E618E]">{p.title}</h3>
+                <p className="text-sm text-[#4A3F35] mt-2 line-clamp-2">{p.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* 스킬 모달 */}
+        {/* MODALS */}
         {openSkill && (
           <SkillModal
             title={openSkill}
@@ -152,12 +155,8 @@ export default function Home() {
           />
         )}
 
-        {/* 프로젝트 모달 */}
         {openProject && (
-          <ProjectModal
-            project={openProject}
-            onClose={() => setOpenProject(null)}
-          />
+          <ProjectModal project={openProject} onClose={() => setOpenProject(null)} />
         )}
       </section>
     </main>
