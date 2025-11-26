@@ -10,7 +10,7 @@ export default function Home() {
   const [openProject, setOpenProject] = useState<any>(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/projects/")
+    fetch(process.env.NEXT_PUBLIC_API_URL + "/api/projects/")
       .then((res) => res.json())
       .then((data) => setProjects(data))
       .catch((err) => console.error(err));
