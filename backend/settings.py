@@ -25,7 +25,15 @@ SECRET_KEY = 'django-insecure-o*%9m5ub(yo+&5adik-w3d%=4c)&f13)%dh)o8yyk)%owe&^+5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+
+	"54.180.127.30",
+	"localhost",
+	"127.0.0.1",
+	".vercel.app",
+	"django-ppt-2st.vercel.app",
+
+]
 
 
 # Application definition
@@ -39,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'portfolio.apps.PortfolioConfig',
-    "corsheaders",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -128,8 +136,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = "/home/ubuntu/django_ppt_2st/staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
