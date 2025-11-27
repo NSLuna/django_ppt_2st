@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import SkillModal from "./components/SkillModal";
 import ProjectModal from "./components/ProjectModal";
 
 export default function Home() {
-  const [openSkill, setOpenSkill] = useState<string | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [openProject, setOpenProject] = useState<any>(null);
 
@@ -16,134 +14,254 @@ export default function Home() {
       .catch((err) => console.error(err));
   }, []);
 
-  const skillDetails: Record<string, string[]> = {
-    Python: [
-      "Pandas / NumPy 기반 데이터 처리 가능",
-      "AI 모델 학습용 데이터셋 전처리 구현 가능",
-      "Django + AI 백엔드 개발 경험",
-    ],
-    Django: ["REST API 설계", "ORM 기반 DB 모델링", "JWT 인증 구현 경험"],
-    React: ["컴포넌트 기반 UI 설계", "Axios API 연동", "상태관리 기본기 보유"],
-    "Next.js": ["SSR / SSG 이해", "App Router 구조 설계", "API Route 구성 가능"],
-    TensorFlow: ["LSTM / GRU 실습 경험", "모델 저장 및 로드 가능", "MNIST / IMDB 실습"],
-    MySQL: ["스키마 설계", "ORM 기반 CRUD", "인덱스 최적화 이해"],
-  };
-
-  const skillList = Object.keys(skillDetails);
+  const skills = [
+    { name: "Python", value: 75, icon: "/icons/python.svg" },
+    { name: "Java", value: 60, icon: "/icons/java.svg" },
+    { name: "JavaScript", value: 62, icon: "/icons/javascript.svg" },
+    { name: "SQL", value: 60, icon: "/icons/sql.svg" },
+    { name: "AWS", value: 70, icon: "/icons/aws.svg" },
+    { name: "Git", value: 72, icon: "/icons/git.svg" },
+  ];
 
   return (
-    <main className="flex min-h-screen w-full bg-[#F5EFEA] font-pretendard">
+    <main className="min-h-screen bg-[#F5EFEA] font-pretendard flex justify-center">
+      <div className="w-[1200px] flex gap-10 py-12">
 
-      {/* 왼쪽 사이드 */}
-      <aside className="w-1/4 bg-[#DCCEE3] p-12 border-r border-[#CBB9D4] flex flex-col justify-start pt-20">
-        <h1 className="text-4xl font-extrabold text-[#7C5FA6] mb-3">루나</h1>
-        <p className="text-lg text-[#7C5FA6] mb-12">AI 풀스택 개발자</p>
-
-        <p className="text-sm text-[#5C4B63] leading-relaxed mb-14">
-          안녕하세요!  
-          <br /> 포트폴리오를 제작 중입니다.  
-          <br /> 아직도 노가다가 끝나지 않아요 😭
-        </p>
-
-        <div className="space-y-8">
+        {/* PROFILE */}
+        <aside className="w-[340px] bg-white rounded-3xl shadow-xl p-8 flex flex-col gap-6">
+          {/* Top */}
           <div>
-            <p className="text-xs font-semibold text-[#7C5FA6] mb-1">Email</p>
-            <a
-              href="mailto:nsluna@naver.com"
-              className="text-[#4E3E55] hover:text-[#7C5FA6] transition"
-            >
-              nsluna@naver.com
-            </a>
+            <div className="w-40 h-40 bg-[#EDE6F2] rounded-full mx-auto mb-5" />
+
+            <h1 className="text-3xl font-extrabold text-center text-[#7C5FA6]">
+              박지은
+            </h1>
+            <p className="text-center text-[#7C5FA6]">
+              AI 풀스택 개발자
+            </p>
           </div>
 
-          <div>
-            <p className="text-xs font-semibold text-[#7C5FA6] mb-1">GitHub</p>
-            <a
-              href="https://github.com/NSLuna"
-              className="text-[#4E3E55] hover:text-[#7C5FA6] transition"
-            >
-              github.com/NSLuna
-            </a>
-          </div>
-        </div>
-      </aside>
+          {/* CONTACT */}
+          <div className="space-y-3 text-sm mt-2">
 
-      {/* 오른쪽 메인 */}
-      <section className="w-3/4 p-20 space-y-20">
+            {/* Birth */}
+            <div className="flex items-center gap-2">
+              <img src="/icons/calendar.svg" alt="Birthday" className="w-4 h-4" />
+              <span className="text-[#4E3E55]">1994.08.15</span>
+            </div>
 
-        {/* Activities */}
-        <div>
-          <h2 className="text-2xl font-semibold text-[#7C5FA6] mb-2">Activities</h2>
-          <div className="w-full h-[1px] bg-[#D7C9E2] mb-6" />
+            {/* Location */}
+            <div className="flex items-center gap-2">
+              <img src="/icons/map-pin.svg" alt="Location" className="w-4 h-4" />
+              <span className="text-[#4E3E55]">Bupyeong, Incheon</span>
+            </div>
 
-          <ul className="text-[#4E3E55] space-y-2">
-            <li>• Django & React 기반 AI 프로젝트 구현</li>
-            <li>• 빅데이터 분석 모델링</li>
-            <li>• 백엔드 API 설계 및 배포</li>
-          </ul>
-        </div>
-
-        {/* Skills */}
-        <div>
-          <h2 className="text-2xl font-semibold text-[#7C5FA6] mb-2">Skills</h2>
-          <div className="w-full h-[1px] bg-[#D7C9E2] mb-6" />
-
-          <div className="flex gap-3 flex-wrap">
-            {skillList.map((skill) => (
-              <button
-                key={skill}
-                onClick={() => setOpenSkill(skill)}
-                className="px-4 py-2 rounded-full bg-white text-[#7C5FA6] 
-                border border-[#E4D6E8] hover:bg-[#EFE6F3] transition shadow-sm"
+            {/* Email */}
+            <div className="flex items-center gap-2">
+              <img src="/icons/mail.svg" alt="Email" className="w-4 h-4" />
+              <a
+                href="mailto:nsluna@naver.com"
+                className="text-[#4E3E55] hover:text-[#7C5FA6] transition"
               >
-                {skill}
-              </button>
-            ))}
-          </div>
-        </div>
+                nsluna@naver.com
+              </a>
+            </div>
 
-        {/* Projects */}
-        <div>
-          <h2 className="text-2xl font-semibold text-[#7C5FA6] mb-2">Projects</h2>
-          <div className="w-full h-[1px] bg-[#D7C9E2] mb-6" />
-
-          <div className="grid grid-cols-2 gap-12">
-            {projects.map((p) => (
-              <div
-                key={p.id}
-                onClick={() => setOpenProject(p)}
-                className="cursor-pointer bg-[#F7F1EC] border border-[#E4DAD2] rounded-xl p-6
-                hover:shadow-[0_4px_18px_rgba(124,95,166,0.25)] hover:-translate-y-1 transition"
+            {/* GitHub */}
+            <div className="flex items-center gap-2">
+              <img src="/icons/github.svg" alt="GitHub" className="w-4 h-4" />
+              <a
+                href="https://github.com/NSLuna"
+                target="_blank"
+                className="text-[#4E3E55] hover:text-[#7C5FA6] transition"
               >
-                {p.thumbnail && (
+                github.com/NSLuna
+              </a>
+            </div>
+
+          </div>
+
+
+          {/* SKILL RINGS */}
+          <div className="grid grid-cols-3 gap-4 justify-items-center">
+            {skills.map((skill) => {
+              const radius = 30;
+              const circumference = 2 * Math.PI * radius;
+              const offset =
+                circumference - (skill.value / 100) * circumference;
+
+              return (
+                <div
+                  key={skill.name}
+                  className="flex flex-col items-center relative"
+                >
+                  <svg width="80" height="80" className="rotate-[-90deg]">
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r={radius}
+                      stroke="#EEE6F0"
+                      strokeWidth="6"
+                      fill="none"
+                    />
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r={radius}
+                      stroke="#7C5FA6"
+                      strokeWidth="6"
+                      fill="none"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={offset}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+
+                  {/* ICON */}
                   <img
-                    src={p.thumbnail}
-                    className="w-full h-48 object-cover rounded-lg mb-5"
+                    src={skill.icon}
+                    alt={skill.name}
+                    className="w-7 h-7 absolute top-[24px]"
                   />
-                )}
-                <h3 className="text-[#7C5FA6] text-lg font-bold">{p.title}</h3>
-                <p className="text-sm text-[#4E3E55] mt-2 line-clamp-2">{p.description}</p>
-              </div>
-            ))}
+
+                  <span className="text-xs font-semibold text-[#7C5FA6] mt-1">
+                    {skill.value}%
+                  </span>
+                  <span className="text-xs text-[#5C4B63]">
+                    {skill.name}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-        </div>
+        </aside>
 
-        {/* Modals */}
-        {openSkill && (
-          <SkillModal
-            title={openSkill}
-            details={skillDetails[openSkill]}
-            onClose={() => setOpenSkill(null)}
-          />
-        )}
+        {/* CONTENT */}
+        <section className="flex-1 space-y-8">
 
+          {/* ACTIVITIES */}
+          <div className="bg-white rounded-3xl shadow p-8">
+            <h2 className="text-xl font-bold text-[#7C5FA6] mb-4">
+              Activities
+            </h2>
+            <ul className="text-[#4E3E55] space-y-2 text-sm">
+              <li>• Django & React 기반 AI 프로젝트 구현</li>
+              <li>• 빅데이터 분석 모델링</li>
+              <li>• 백엔드 API 설계 및 배포</li>
+            </ul>
+          </div>
+
+          {/* SKILLS */}
+          <div className="bg-white rounded-3xl shadow p-8">
+            <h2 className="text-xl font-bold text-[#7C5FA6] mb-6">
+              Skills
+            </h2>
+
+            <div className="grid grid-cols-2 gap-6 text-sm text-[#4E3E55]">
+
+              <div className="bg-[#FAF6FD] rounded-xl p-4">
+                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                  AI / ML
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="skill-badge">Pandas</span>
+                  <span className="skill-badge">NumPy</span>
+                  <span className="skill-badge">TensorFlow</span>
+                  <span className="skill-badge">Keras</span>
+                  <span className="skill-badge">KNN</span>
+                </div>
+              </div>
+
+              <div className="bg-[#FAF6FD] rounded-xl p-4">
+                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                  Backend
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="skill-badge">Spring Boot</span>
+                  <span className="skill-badge">Django REST</span>
+                  <span className="skill-badge">JWT</span>
+                </div>
+              </div>
+
+              <div className="bg-[#FAF6FD] rounded-xl p-4">
+                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                  Frontend
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="skill-badge">React</span>
+                  <span className="skill-badge">Next.js</span>
+                  <span className="skill-badge">Component Design</span>
+                </div>
+              </div>
+
+              <div className="bg-[#FAF6FD] rounded-xl p-4">
+                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                  Database
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="skill-badge">MySQL</span>
+                  <span className="skill-badge">Schema</span>
+                  <span className="skill-badge">ORM</span>
+                </div>
+              </div>
+
+              <div className="bg-[#FAF6FD] rounded-xl p-4 col-span-2">
+                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                  Infra / Deploy
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="skill-badge">AWS Lightsail</span>
+                  <span className="skill-badge">Nginx</span>
+                  <span className="skill-badge">Gunicorn</span>
+                  <span className="skill-badge">HTTPS</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* PROJECTS */}
+          <div className="bg-white rounded-3xl shadow p-8">
+            <h2 className="text-xl font-bold text-[#7C5FA6] mb-6">
+              Projects
+            </h2>
+
+            <div className="grid grid-cols-2 gap-8">
+              {projects.map((p) => (
+                <div
+                  key={p.id}
+                  onClick={() => setOpenProject(p)}
+                  className="cursor-pointer bg-[#F7F1EC] rounded-xl p-4
+                  hover:shadow-lg hover:-translate-y-1 transition"
+                >
+                  {p.thumbnail && (
+                    <img
+                      src={p.thumbnail}
+                      className="w-full h-40 object-cover rounded-lg mb-3"
+                    />
+                  )}
+                  <h3 className="text-[#7C5FA6] font-bold">
+                    {p.title}
+                  </h3>
+                  <p className="text-sm text-[#4E3E55] line-clamp-2 mt-1">
+                    {p.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </section>
+
+        {/* MODAL */}
         {openProject && (
           <ProjectModal
             project={openProject}
             onClose={() => setOpenProject(null)}
           />
         )}
-      </section>
+
+      </div>
     </main>
   );
 }

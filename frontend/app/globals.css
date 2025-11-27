@@ -62,3 +62,11 @@ html, body {
 }
 
 
+.skill-badge {
+  background-color: #EFE6F3;
+  color: #6B4E8E;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
