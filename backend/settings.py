@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -32,6 +33,8 @@ ALLOWED_HOSTS = [
 	"127.0.0.1",
 	".vercel.app",
 	"django-ppt-2st.vercel.app",
+    "www.luna-ppt.kr",
+    "luna-ppt.kr",
 
 ]
 
@@ -65,6 +68,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://django-ppt-2st.vercel.app",
+    "https://luna-ppt.kr",
+    "https://www.luna-ppt.kr",
+
 ]
 
 MEDIA_URL = "/media/"
