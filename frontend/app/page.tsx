@@ -31,12 +31,18 @@ export default function Home() {
         <aside className="w-[340px] bg-white rounded-3xl shadow-xl p-8 flex flex-col gap-6">
           {/* Top */}
           <div>
-            <div className="w-40 h-40 bg-[#EDE6F2] rounded-full mx-auto mb-5" />
 
-            <h1 className="text-3xl font-extrabold text-center text-[#7C5FA6]">
+            <div className="w-40 h-40 bg-[#EDE6F2] rounded-full mx-auto mb-5 flex items-center justify-center" >
+              <img
+                src="/icons/luna-icon2.svg"
+                alt="Luna symbol"
+                className="w-24 h-24"
+              />
+              </div>
+            <h1 className="text-3xl font-extrabold text-center text-[#5C476E]">
               박지은
             </h1>
-            <p className="text-center text-[#7C5FA6]">
+            <p className="text-center text-[#5C476E]">
               AI 풀스택 개발자
             </p>
           </div>
@@ -141,26 +147,27 @@ export default function Home() {
 
           {/* ACTIVITIES */}
           <div className="bg-white rounded-3xl shadow p-8">
-            <h2 className="text-xl font-bold text-[#7C5FA6] mb-4">
+            <h2 className="text-xl font-bold text-[#5C476E] mb-4">
               Activities
             </h2>
             <ul className="text-[#4E3E55] space-y-2 text-sm">
-              <li>• Django & React 기반 AI 프로젝트 구현</li>
-              <li>• 빅데이터 분석 모델링</li>
-              <li>• 백엔드 API 설계 및 배포</li>
+              <li>• Django & React 기반 AI 프로젝트 설계부터 직접 만들어보는 단계</li>
+              <li>• 머신러닝 / 딥러닝 기반 데이터 분석 모델링 실험과 적용</li>
+              <li>• REST API 구조 이해와 배포 환경 구성 경험</li>
+              <li>• UI 구성과 사용자 흐름을 고려한 프론트엔드 구현</li>
             </ul>
           </div>
 
           {/* SKILLS */}
           <div className="bg-white rounded-3xl shadow p-8">
-            <h2 className="text-xl font-bold text-[#7C5FA6] mb-6">
+            <h2 className="text-xl font-bold text-[#5C476E] mb-6">
               Skills
             </h2>
 
             <div className="grid grid-cols-2 gap-6 text-sm text-[#4E3E55]">
 
               <div className="bg-[#FAF6FD] rounded-xl p-4">
-                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                <h3 className="font-semibold text-[#5C476E] mb-2">
                   AI / ML
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -173,7 +180,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#FAF6FD] rounded-xl p-4">
-                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                <h3 className="font-semibold text-[#5C476E] mb-2">
                   Backend
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -184,7 +191,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#FAF6FD] rounded-xl p-4">
-                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                <h3 className="font-semibold text-[#5C476E] mb-2">
                   Frontend
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -195,7 +202,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#FAF6FD] rounded-xl p-4">
-                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                <h3 className="font-semibold text-[#5C476E] mb-2">
                   Database
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -206,7 +213,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#FAF6FD] rounded-xl p-4 col-span-2">
-                <h3 className="font-semibold text-[#7C5FA6] mb-2">
+                <h3 className="font-semibold text-[#5C476E] mb-2">
                   Infra / Deploy
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -222,7 +229,7 @@ export default function Home() {
 
           {/* PROJECTS */}
           <div className="bg-white rounded-3xl shadow p-8">
-            <h2 className="text-xl font-bold text-[#7C5FA6] mb-6">
+            <h2 className="text-xl font-bold text-[#5C476E] mb-6">
               Projects
             </h2>
 
@@ -231,8 +238,8 @@ export default function Home() {
                 <div
                   key={p.id}
                   onClick={() => setOpenProject(p)}
-                  className="cursor-pointer bg-[#F7F1EC] rounded-xl p-4
-                  hover:shadow-lg hover:-translate-y-1 transition"
+                  className="cursor-pointer  backdrop-blur-sm bg-[#EEE6F5]/60 rounded-xl p-4 shadow-md
+                  hover:shadow-lg hover:-translate-y-1 transition hover:bg-[#E9DFF7] "
                 >
                   {p.thumbnail && (
                     <img
@@ -246,6 +253,36 @@ export default function Home() {
                   <p className="text-sm text-[#4E3E55] line-clamp-2 mt-1">
                     {p.description}
                   </p>
+
+                  {p.tech_stack != null && (
+                    <div className="flex flex-wrap gap-1 mt-2 text-xs text-[#7C5FA6] opacity-70">
+                      {Array.isArray(p.tech_stack)
+                        ? p.tech_stack.map((tech:string , idx:number) => (
+                          <span
+                            key={idx}
+                            className="bg-white/60 px-2 py-[1px] rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))
+                        : typeof p.tech_stack === "string"
+                          ? p.tech_stack.split(",").map((tech:string, idx:number) => (
+                            <span
+                              key={idx}
+                              className="bg-white/60 px-2 py-[1px] rounded-full"
+                            >
+                              {tech.trim()}
+                            </span>
+                          ))
+                          : (
+                            <span className="bg-white/40 px-2 py-[1px] rounded-full">
+                              {String(p.tech_stack)}
+                            </span>
+                          )
+                      }
+                    </div>
+                  )}
+
                 </div>
               ))}
             </div>

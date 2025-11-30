@@ -78,6 +78,7 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* 설명 */}
         <p className="text-[#5A4D45] leading-relaxed mb-6 whitespace-pre-line">
+          <h3 className="font-semibold text-[#6E618E] mb-2">프로젝트 설명</h3>
           {project.description}
         </p>
 
@@ -89,7 +90,7 @@ export default function ProjectModal({ project, onClose }) {
             rel="noopener noreferrer"
             className="text-sm text-[#6E618E] hover:underline"
           >
-            GitHub 링크 보기
+            GitHub 바로가기
           </a>
         )}
       </div>
