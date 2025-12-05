@@ -100,9 +100,9 @@ export default function ProjectModal({ project, onClose }) {
             rel="noopener noreferrer"
             className="text-sm text-[#6E618E] hover:underline"
           >
-            GitHub 바로가기
+            GitHub 링크
           </a>
-        )}
+        )} <br/> <br/>
 
         {/* 배포 링크 */}
         {project.link && (
@@ -112,7 +112,7 @@ export default function ProjectModal({ project, onClose }) {
             rel="noopener noreferrer"
             className="text-sm text-[#6E618E] hover:underline"
           >
-            배포홈페이지 바로가기
+            배포홈페이지 링크
           </a>
 
 
