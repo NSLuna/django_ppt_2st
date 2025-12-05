@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ImageZoomModal from "./ImageZoomModal";
+import { processMediaUrl } from "../../utils/api";
 
 export default function ProjectModal({ project, onClose }) {
   const [zoomImage, setZoomImage] = useState(null);
@@ -24,11 +25,14 @@ export default function ProjectModal({ project, onClose }) {
         </div>
 
         {/* 대표 이미지 */}
-        {project.thumbnail && (
+        {(project.thumbnail_url || project.thumbnail) && (
           <img
-            src={project.thumbnail}
+            src={processMediaUrl(project.thumbnail_url || project.thumbnail)}
             alt="썸네일"
             className="w-full rounded-xl mb-5 shadow-sm"
+            onError={(e) => {
+              console.error("Failed to load thumbnail:", (e.target).src);
+            }}
           />
         )}
 
@@ -37,16 +41,22 @@ export default function ProjectModal({ project, onClose }) {
           <div className="mb-6">
             <h3 className="font-semibold text-[#6E618E] mb-2">추가 이미지</h3>
             <div className="flex gap-3 overflow-x-auto pb-2">
-              {project.images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img.image_url}
-                  alt={`추가 이미지 ${idx}`}
-                  className="w-28 h-28 object-cover rounded-xl cursor-pointer
-                             hover:opacity-80 transition shadow-sm"
-                  onClick={() => setZoomImage(img.image_url)}
-                />
-              ))}
+              {project.images.map((img, idx) => {
+                const imageSrc = processMediaUrl(img.image_url);
+                return (
+                  <img
+                    key={idx}
+                    src={imageSrc}
+                    alt={`추가 이미지 ${idx}`}
+                    className="w-28 h-28 object-cover rounded-xl cursor-pointer
+                               hover:opacity-80 transition shadow-sm"
+                    onClick={() => setZoomImage(imageSrc)}
+                    onError={(e) => {
+                      console.error("Failed to load project image:", (e.target).src);
+                    }}
+                  />
+                );
+              })}
             </div>
           </div>
         )}
@@ -92,6 +102,21 @@ export default function ProjectModal({ project, onClose }) {
           >
             GitHub 바로가기
           </a>
+        )}
+
+        {/* 배포 링크 */}
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[#6E618E] hover:underline"
+          >
+            배포홈페이지 바로가기
+          </a>
+
+
+
         )}
       </div>
     </div>

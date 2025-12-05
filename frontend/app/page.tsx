@@ -2,16 +2,53 @@
 
 import { useState, useEffect } from "react";
 import ProjectModal from "./components/ProjectModal";
+import { getApiUrl, processMediaUrl } from "../utils/api";
 
 export default function Home() {
   const [projects, setProjects] = useState<any[]>([]);
   const [openProject, setOpenProject] = useState<any>(null);
 
   useEffect(() => {
-    fetch(process.env.NEXT_PUBLIC_API_URL + "/api/projects/")
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-      .catch((err) => console.error(err));
+    const apiUrl = getApiUrl();
+    
+    if (!apiUrl) {
+      console.error('API URL을 가져올 수 없습니다. NEXT_PUBLIC_API_URL 환경 변수를 설정해주세요.');
+      setProjects([]);
+      return;
+    }
+    
+    const apiEndpoint = `${apiUrl}/api/projects/`;
+    
+    console.log("Fetching projects from:", apiEndpoint);
+    
+    fetch(apiEndpoint)
+      .then(async (res) => {
+        // 응답이 HTML인지 확인
+        const contentType = res.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await res.text();
+          console.error("API returned non-JSON response:", text.substring(0, 200));
+          throw new Error(`API returned HTML instead of JSON. Status: ${res.status}`);
+        }
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Projects data received:", data);
+        // API 응답이 객체 형태일 수 있으므로 처리
+        const projectsData = Array.isArray(data) 
+          ? data 
+          : data.Projects || data.projects || data;
+        setProjects(projectsData || []);
+      })
+      .catch((err) => {
+        console.error("Error fetching projects:", err);
+        console.error("API URL used:", apiEndpoint);
+        setProjects([]); // 에러 시 빈 배열로 설정
+      });
   }, []);
 
   const skills = [
@@ -34,9 +71,27 @@ export default function Home() {
 
             <div className="w-40 h-40 bg-[#EDE6F2] rounded-full mx-auto mb-5 flex items-center justify-center" >
               <img
-                src="/icons/luna-icon2.svg"
+                src="/icons/lunaicon2.svg"
                 alt="Luna symbol"
                 className="w-24 h-24"
+                onError={(e) => {
+                  // 경로 문제 시 여러 경로를 시도
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('lunaicon2.svg')) return;
+                  
+                  const currentSrc = target.src;
+                  const baseUrl = currentSrc.split('/icons/')[0];
+                  
+                  // 여러 경로를 순차적으로 시도
+                  if (currentSrc.includes('/icons/')) {
+                    target.src = './icons/lunaicon2.svg';
+                  } else if (currentSrc.includes('./icons/')) {
+                    target.src = '/icons/lunaicon2.svg';
+                  } else {
+                    target.src = `${baseUrl}/icons/lunaicon2.svg`;
+                  }
+                  console.error("Failed to load lunaicon2.svg, trying alternative paths");
+                }}
               />
               </div>
             <h1 className="text-3xl font-extrabold text-center text-[#5C476E]">
@@ -241,10 +296,13 @@ export default function Home() {
                   className="cursor-pointer  backdrop-blur-sm bg-[#EEE6F5]/60 rounded-xl p-4 shadow-md
                   hover:shadow-lg hover:-translate-y-1 transition hover:bg-[#E9DFF7] "
                 >
-                  {p.thumbnail && (
+                  {(p.thumbnail_url || p.thumbnail) && (
                     <img
-                      src={p.thumbnail}
+                      src={processMediaUrl(p.thumbnail_url || p.thumbnail)}
                       className="w-full h-40 object-cover rounded-lg mb-3"
+                      onError={(e) => {
+                        console.error("Failed to load thumbnail:", (e.target as HTMLImageElement).src);
+                      }}
                     />
                   )}
                   <h3 className="text-[#7C5FA6] font-bold">

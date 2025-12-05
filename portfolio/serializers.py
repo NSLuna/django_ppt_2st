@@ -18,7 +18,11 @@ class ProjectImageSerializer(serializers.ModelSerializer):
     def get_image_url(self, obj):
         request = self.context.get('request')
         if request:
-            return request.build_absolute_uri(obj.image.url)
+            url = request.build_absolute_uri(obj.image.url)
+            # HTTPS 강제 (배포 환경)
+            if url.startswith('http://') and request.get_host().startswith('luna-ppt.kr'):
+                url = url.replace('http://', 'https://')
+            return url
         return obj.image.url   # fallback
         
 
@@ -43,6 +47,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if obj.thumbnail:
             if request:
-                return request.build_absolute_uri(obj.thumbnail.url)
+                url = request.build_absolute_uri(obj.thumbnail.url)
+                # HTTPS 강제 (배포 환경)
+                if url.startswith('http://') and request.get_host().startswith('luna-ppt.kr'):
+                    url = url.replace('http://', 'https://')
+                return url
             return obj.thumbnail.url
         return None

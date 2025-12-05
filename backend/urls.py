@@ -28,6 +28,9 @@ urlpatterns = [
     path('', RedirectView.as_view(url="https://django-ppt-2st.vercel.app/", permanent=False)),
 ]
 
-
+# 미디어 파일 서빙 (개발 및 배포 환경 모두)
 if settings.DEBUG:
-   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # 배포 환경에서도 미디어 파일 서빙 (Nginx가 없는 경우를 대비)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

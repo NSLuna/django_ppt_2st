@@ -78,6 +78,12 @@ CORS_ALLOWED_ORIGINS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+# HTTPS 지원 (배포 환경용)
+USE_TLS = os.environ.get('USE_TLS', 'False') == 'True'
+if USE_TLS:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = False  # Nginx에서 처리하므로 Django에서는 처리하지 않음
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
