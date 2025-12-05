@@ -38,6 +38,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             "description",
             "tech_stack",
             "github",
+            "link",
             "thumbnail",
             "thumbnail_url",
             "images",
